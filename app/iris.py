@@ -32,7 +32,7 @@ def format_stan_data(iris_data):
     return stan_iris_data
 
 def train_iris_model(data, output_file):
-    iris_model = pystan.StanModel(file='app/iris.stan')
+    iris_model = pystan.StanModel(file='iris.stan')
     iris_fit = iris_model.sampling(data=data, iter=1000,
                               chains=4)
 
@@ -46,9 +46,8 @@ def train_iris_model(data, output_file):
 def fit_iris():
     iris_data = get_iris_dataset()
     stan_iris_data = format_stan_data(iris_data)
-    train_iris_model(stan_iris_data, 'tmp/iris.pkl')
+    train_iris_model(stan_iris_data, '../tmp/iris.pkl')
     return True
-
 
 if __name__ == '__main__':
     fit_iris()
