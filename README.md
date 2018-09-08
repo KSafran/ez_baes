@@ -5,6 +5,7 @@ Fit bayesian MCMC models in the cloud from your browser
 ```
 redis-server
 ```
+
 ```
 python3 -m venv venv
 source venv/bin/activate
