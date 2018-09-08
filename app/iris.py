@@ -2,6 +2,9 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 import pystan
 import pickle
+from huey import RedisHuey
+
+huey = RedisHuey('iris')
 
 def get_iris_dataset():
     iris_file = "https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"
@@ -39,10 +42,13 @@ def train_iris_model(data, output_file):
                      'fit':iris_fit}, f)
     return iris_fit
 
+@huey.task()
 def fit_iris():
     iris_data = get_iris_dataset()
     stan_iris_data = format_stan_data(iris_data)
     train_iris_model(stan_iris_data, 'tmp/iris.pkl')
+    return True
+
 
 if __name__ == '__main__':
     fit_iris()
